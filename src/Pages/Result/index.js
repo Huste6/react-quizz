@@ -11,23 +11,23 @@ function Result() {
     const [questions, setQuestions] = useState([]);
     const [correct,setCorrect] = useState(0);
 
-    useEffect(() => {
-        const fetchTopicData = async () => {
-            const response = await getTopic(params.id);
-            setDataTopic(response);
-        };
-        fetchTopicData();
-    }, [params.id]);
+    // useEffect(() => {
+    //     const fetchTopicData = async () => {
+    //         const response = await getTopic(params.id);
+    //         setDataTopic(response);
+    //     };
+    //     fetchTopicData();
+    // }, [params.id]);
 
     useEffect(() => {
         const fetchQuestionAndAnswers = async () => {
             let countCorrect = 0;
-            const result = [];
+            let result = [];
             const response = await getDetailAnswerByUserId(params.id);
             if (response && response.length > 0) {
                 const questionsResponse = await getQuestionInTopic(response[0].topicId);
-                questionsResponse.forEach((question) => {
-                    const userAnswer = response[0].answers.find((answer1) => answer1.questionId === parseInt(question.id));
+                questionsResponse.map((question) => {
+                    const userAnswer = response[0].answers.find((answer1) => parseInt(answer1.questionId) === parseInt(question.id));
                     if (userAnswer) {
                         result.push({
                             ...question,
@@ -47,8 +47,6 @@ function Result() {
         fetchQuestionAndAnswers();
     }, [params.id]);
 
-    console.log(questions);
-    
     return (
         <>
             <h2 className="topic-title">Kết quả chủ đề: {dataTopic && dataTopic.name}</h2>

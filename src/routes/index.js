@@ -8,6 +8,7 @@ import Quizz from "../Pages/Quizz";
 import Result from "../Pages/Result";
 import Topic from "../Pages/Topic";
 import Logout from "../Pages/Logout";
+import Error from "../Pages/Error404";
 
 export const routes = [
     {
@@ -51,6 +52,11 @@ export const routes = [
                     },
                 ]
             }
-        ]
+        ],
+        
+    },
+    {
+        path: "*",
+        element: <Error />
     }
 ];

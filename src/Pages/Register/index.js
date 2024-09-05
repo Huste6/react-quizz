@@ -1,6 +1,6 @@
-import { checkExits, register } from "../../service/userService";
+import { checkExits, getAllUser, register } from "../../service/userService";
 import "./register.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { generateRandomString } from "../../helper/generate";
@@ -14,6 +14,7 @@ function Register() {
     const inputShowConfirmPassword = useRef();
     const [isPasswordVisible,setPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    const [countUSer,setDataCountUSer] = useState(0);
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!isPasswordVisible);
@@ -22,8 +23,16 @@ function Register() {
 
     const toggleConfirmPasswordVisibility = () => {
         setConfirmPasswordVisible(!isConfirmPasswordVisible);
-        inputShowPassWord.current.type = isConfirmPasswordVisible ? 'password' : 'text';
+        inputShowConfirmPassword.current.type = isConfirmPasswordVisible ? 'password' : 'text';
     }
+
+    useEffect(()=>{
+        const fetchApi = async () => {
+            const result = await getAllUser();
+            setDataCountUSer(result.length);
+        }
+        fetchApi();
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,7 +51,8 @@ function Register() {
                     fullName: fullName,
                     email: email,
                     password: password,
-                    token: generateRandomString(20)
+                    token: generateRandomString(20),
+                    id: (countUSer + 1).toString()
                 }
                 const response = await register(option);
                 if(response){
@@ -59,10 +69,10 @@ function Register() {
             <form className="login__form" onSubmit={handleSubmit}>
                 <h2 className="login__title">Sign up</h2>
                 <div className="login__field">
-                    <input type="fullName" placeholder="Enter FullName"  class="login__input"/>
+                    <input type="fullName" placeholder="Enter FullName"  class="login__input" required/>
                 </div>
                 <div className="login__field">
-                    <input type="email" placeholder="Enter email" className="login__input" />
+                    <input type="email" placeholder="Enter email" className="login__input" required/>
                 </div>
                 <div className="login__field">
                     <input
@@ -70,6 +80,7 @@ function Register() {
                         type={isPasswordVisible ? 'text' : 'password'}
                         placeholder="Enter password"
                         className="login__input"
+                        required
                     />
                     <i
                         className={`fa-regular ${isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'} login__toggle`}
@@ -82,6 +93,7 @@ function Register() {
                         type={isConfirmPasswordVisible ? 'text' : 'password'}
                         placeholder="Cofirm your password"
                         className="login__input"
+                        required
                     />
                     <i
                         className={`fa-regular ${isConfirmPasswordVisible ? 'fa-eye-slash' : 'fa-eye'} login__toggle`}

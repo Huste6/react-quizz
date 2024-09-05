@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { getCookie } from "../../helper/cookie";
 import "./home.scss";
 
@@ -10,8 +11,8 @@ function Home() {
                 <>
                     <p className="welcome-message">Chúc mừng bạn đã đăng nhập thành công!</p>
                     <div className="button-container">
-                        <button className="styled-button">Danh sách chủ đề ôn luyện</button>
-                        <button className="styled-button">Danh sách chủ đề đã ôn luyện</button>
+                        <Link to="/topic" className="styled-button">Danh sách chủ đề ôn luyện</Link>
+                        <Link to="/answer" className="styled-button">Danh sách chủ đề đã ôn luyện</Link>
                     </div>
                 </>
             )}

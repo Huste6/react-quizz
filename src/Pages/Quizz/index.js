@@ -35,18 +35,17 @@ function Quizz() {
             setTotal(response.length);
         }
         fetchApi();
-    },[])
+    },[total])
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         const option = {
-            "userId": getCookie("id"),
-            "topicId": params.id,
-            "answers": dataUserAnswer,
-            "id" : (total + 1).toString()
-
+            "userId": (getCookie("id")),
+            "topicId": parseInt(params.id),
+            "answers": (dataUserAnswer),
+            "id" : (total + 1)
         }
-
+        
         const result = await createAnwserByUserId(option);
         if(result){
             navigate(`/result/${option.id}`);
@@ -57,15 +56,16 @@ function Quizz() {
         const q = parseInt(e.target.id.split('-')[0][1]);
         const a = parseInt(e.target.id.split('-')[1][1]);
         const newAnswers = [...dataUserAnswer];
-        const IndexexistQuestion = newAnswers.findIndex(item => item.questionId === q+1);
+        const IndexexistQuestion = newAnswers.findIndex(item => item.questionId === parseInt(dataQuestionInTopic[q].id));
+        
         if(IndexexistQuestion == -1){
             newAnswers.push({
-                "questionId": q+1,
+                "questionId": parseInt(dataQuestionInTopic[q].id),
                 "answer": a
             });
         }else{
             newAnswers[IndexexistQuestion] = {
-                "questionId": q+1,
+                "questionId": parseInt(dataQuestionInTopic[q].id),
                 "answer": a
             }
         }

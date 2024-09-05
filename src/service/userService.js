@@ -14,3 +14,8 @@ export const checkExits = async (key,value) => {
     const result = await get(`users?${key}=${value}`)
     return result;
 }
+
+export const getAllUser = async () => {
+    const result = await get(`users`);
+    return result;
+}
