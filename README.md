@@ -1,5 +1,5 @@
-<video width="630" height="300" src="https://drive.google.com/file/d/1xAYfmUlDVtb7XcCsohtEzzit27PQ7Upl/view?usp=sharing"></video>
-
+# Video demo 
+[![Watch the video](https://github.com/user-attachments/assets/cd7d815e-e9a8-4741-a421-d64f3a4cbe58)](https://drive.google.com/file/d/1xAYfmUlDVtb7XcCsohtEzzit27PQ7Upl/view?usp=sharing)
 
 # Getting Started with Create React App
 
